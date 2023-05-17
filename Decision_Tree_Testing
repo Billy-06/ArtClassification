@@ -1,0 +1,68 @@
+import os
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.preprocessing import LabelEncoder
+from skimage.io import imread
+from skimage.transform import resize
+from skimage.color import rgba2rgb, gray2rgb
+
+# Set the path to the test dataset directory
+test_dir = 'test set'
+
+# Initialize empty lists to store the test images and corresponding labels
+test_images = []
+test_labels = []
+
+# Iterate through each class folder in the test directory
+for class_name in os.listdir(test_dir):
+    class_dir = os.path.join(test_dir, class_name)
+    
+    # Iterate through each image in the class folder
+    for image_name in os.listdir(class_dir):
+        image_path = os.path.join(class_dir, image_name)
+        
+        # Load the test image
+        test_image = imread(image_path)
+        
+        # Convert image to RGB format if it has an alpha channel or grayscale
+        if test_image.shape[-1] == 4:  # RGBA image
+            test_image = rgba2rgb(test_image)
+        elif len(test_image.shape) == 2:  # Grayscale image
+            test_image = gray2rgb(test_image)
+        
+        # Remove the alpha channel if present
+        test_image = test_image[:, :, :3]
+        
+        # Resize the test image to the same size used during training
+        resized_test_image = resize(test_image, (300, 300), mode='reflect')
+        
+        # Append the resized test image to the test images list
+        test_images.append(resized_test_image)
+        
+        # Append the corresponding label to the test labels list
+        test_labels.append(class_name)
+
+# Convert the test lists to numpy arrays
+test_images = np.array(test_images)
+test_labels = np.array(test_labels)
+
+# Perform label encoding on the test labels using the same label encoder used during training
+test_labels_encoded = label_encoder.transform(test_labels)
+
+# Reshape the test image array for input to the DecisionTreeClassifier
+test_images = test_images.reshape(test_images.shape[0], -1)
+
+# Make predictions on the test set using the trained classifier
+test_predictions = clf.predict(test_images)
+
+# Compute the confusion matrix
+cm = confusion_matrix(test_labels_encoded, test_predictions, normalize='true')
+
+# Plot the confusion matrix
+disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=label_encoder.classes_)
+disp.plot()
+plt.title('Normalized Confusion Matrix (Test Set)')
+plt.show()
