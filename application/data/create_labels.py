@@ -39,7 +39,7 @@ def write_yolo_label(image_path, category, output_dir):
     image_width, image_height = image.size
 
     with open(label_path, "w") as label_file:
-        label_file.write(f"{category} 0 0 {image_width} {image_height}")
+        label_file.write(f"{category} 0 0 {image_width-5} {image_height-5}")
 
 def process_images(path, output_dir):
     categories = {
@@ -61,6 +61,6 @@ def process_images(path, output_dir):
     print("Done!")
 
 # Example usage
-path = "C:/Users/billy/Documents/GitHub/BinaryClassificationModel/application/data/arts_data/train"
-output_dir = "C:/Users/billy/Documents/GitHub/BinaryClassificationModel/application/data/arts_data/labels"
+path = "C:/Users/billy/Documents/GitHub/BinaryClassificationModel/application/data/arts_data_backup/train"
+output_dir = "C:/Users/billy/Documents/GitHub/BinaryClassificationModel/application/data/arts_data/labels/train"
 process_images(path, output_dir)
