@@ -1,0 +1,14 @@
+path: ../arts_data
+
+train: images/train
+val: images/val
+test: test
+
+nc: 5
+
+names:
+  0: sculpture
+  1: drawings
+  2: iconography
+  3: engraving
+  4: painting
