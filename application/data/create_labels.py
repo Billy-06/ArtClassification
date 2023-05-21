@@ -38,6 +38,12 @@ def write_yolo_label(image_path, category, output_dir):
     image = Image.open(image_path)
     image_width, image_height = image.size
 
+    # convert the image_width and image_height to floats that are between 0 and 1 (YOLO format)
+    # depending on the image size, the coordinates of the center of the image will be between 0 and 1
+    image_width = image_width / image_width
+    image_height = image_height / image_height
+    
+
     with open(label_path, "w") as label_file:
         label_file.write(f"{category} {image_width/2} {image_height/2} {image_width} {image_height}")
 
