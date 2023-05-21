@@ -39,7 +39,7 @@ def write_yolo_label(image_path, category, output_dir):
     image_width, image_height = image.size
 
     with open(label_path, "w") as label_file:
-        label_file.write(f"{category} 0 0 {image_width-5} {image_height-5}")
+        label_file.write(f"{category} {image_width/2} {image_height/2} {image_width} {image_height}")
 
 def process_images(path, output_dir):
     categories = {
