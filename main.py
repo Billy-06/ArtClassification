@@ -3,10 +3,13 @@ import streamlit as st
 from application import PARENT_DIR, APPLICATION_DIR, DATA_DIR, WEIGHTS_DIR, MODELS_DIR
 from application.models.YOLOv5 import YOLOv5
 from PIL import Image
+import yolov5
 
 # Configure the weights in .pt format to be loaded into the model
 # The weights are stored in the applicaiton/data/weights/best.pt location
-model = YOLOv5(os.path.join(WEIGHTS_DIR, 'best.pt'))
+
+# model = YOLOv5(os.path.join(WEIGHTS_DIR, 'best.pt'))
+model = yolov5.load(os.path.join(WEIGHTS_DIR, 'best.pt'))
 
 # Create a title and sub-title
 st.write("""

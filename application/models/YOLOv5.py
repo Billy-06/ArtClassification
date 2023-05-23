@@ -8,7 +8,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.transforms as transforms
-from application.data.weights import *
+import sys
+
 
 class YOLOv5(nn.Module):
     def __init__(self, weights):
@@ -30,12 +31,23 @@ class YOLOv5(nn.Module):
                         2: 'iconography',
                         3: 'engraving',
                         4: 'painting'}
-        
+    
+    def forward(self, x):
+        return self.model(x)
+
+    # Load weights and catch the module not found error
     def load_weights(self, weights):
-        self.weights = weights
+        try:
+            self.weights = weights
+        except FileNotFoundError:
+            print("File not found")
+            sys.exit(1)
         
     def load_model(self):
-        self.model = torch.load(self.weights)
+        # Use the weights to get the model
+        self.model = torch.load(
+            self.weights
+        )
         
     def predict(self, image):
         img = self.transform(image).unsqueeze(0)
