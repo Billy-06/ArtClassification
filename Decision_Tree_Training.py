@@ -9,6 +9,7 @@ from skimage.io import imread
 from skimage.transform import resize
 from skimage.color import rgba2rgb, gray2rgb
 
+# Set the path to the dataset directory
 dataset_dir = 'training set'
 
 # Initialize empty lists to store the images and corresponding labels
@@ -43,7 +44,7 @@ for class_name in os.listdir(dataset_dir):
         
         # Append the corresponding label to the labels list
         labels.append(class_name)
-        
+
 # Convert the lists to numpy arrays
 images = np.array(images)
 labels = np.array(labels)
@@ -52,7 +53,7 @@ labels = np.array(labels)
 label_encoder = LabelEncoder()
 labels = label_encoder.fit_transform(labels)
 
-# Split the dataset into training and validating sets
+# Split the dataset into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(images, labels, test_size=0.1, random_state=42)
 
 # Reshape the image arrays for input to DecisionTreeClassifier
@@ -64,10 +65,6 @@ clf = DecisionTreeClassifier()
 
 # Train the classifier
 clf.fit(X_train, y_train)
-
-dir(clf)
-
-clf.metrics
 
 # Make predictions on the test set
 y_pred = clf.predict(X_test)
