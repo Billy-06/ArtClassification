@@ -1,6 +1,6 @@
 import os
 import streamlit as st
-from application.models.YOLOv5 import YOLOv5
+from application.models.Billy.YOLOv5 import YOLOv5
 from PIL import Image
 import yolov5
 import pickle
