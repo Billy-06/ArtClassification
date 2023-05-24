@@ -1,32 +1,6 @@
 import os
 import shutil
 
-# def rename_images(path):
-#     image_extensions = ['.jpg', '.jpeg', '.png', '.gif']  # Add more extensions if needed
-
-#     print(f"Renaming images in '{path}'...")
-#     for filename in os.listdir(path):
-#         file_path = os.path.join(path, filename)
-#         if os.path.isfile(file_path) and os.path.splitext(filename)[1].lower() in image_extensions:
-#             new_filename = generate_new_filename(path, filename)
-#             new_file_path = os.path.join(path, new_filename)
-#             try:
-#                 os.rename(file_path, new_file_path)
-#                 print(f"Renamed '{filename}' to '{new_filename}'")
-#             except FileExistsError:
-#                 print(f"A file with the name '{new_filename}' already exists.")
-
-#     print("Finished renaming images.")
-
-# def generate_new_filename(path, filename):
-#     name, ext = os.path.splitext(filename)
-#     counter = 1
-#     new_filename = filename
-#     while os.path.exists(os.path.join(path, new_filename)):
-#         new_filename = f"{name}_{counter}{ext}"
-#         counter += 1
-#     return new_filename
-
 def rename_images(path):
     for root, dirs, files in os.walk(path):
         for file in files:

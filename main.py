@@ -1,15 +1,35 @@
 import os
 import streamlit as st
-from application import PARENT_DIR, APPLICATION_DIR, DATA_DIR, WEIGHTS_DIR, MODELS_DIR
 from application.models.YOLOv5 import YOLOv5
 from PIL import Image
 import yolov5
+import pickle
+import sklearn
+import base64
+import tensorflow as tf
+from application import PARENT_DIR, APPLICATION_DIR, DATA_DIR, WEIGHTS_DIR, MODELS_DIR
 
-# Configure the weights in .pt format to be loaded into the model
-# The weights are stored in the applicaiton/data/weights/best.pt location
+# Load the saved model from the file
+# open the pickle file located in the application/data/weigths/decision_tree_model.pkl location
 
-# model = YOLOv5(os.path.join(WEIGHTS_DIR, 'best.pt'))
-model = yolov5.load(os.path.join(WEIGHTS_DIR, 'best.pt'))
+# filename = 'decision_tree_model.pkl'
+# filename = 'art_classifier_model.pkl'
+# with open(os.path.join(WEIGHTS_DIR, filename), 'rb') as file:
+#     model = pickle.load(file)
+# with open(os.path.join(WEIGHTS_DIR, filename), 'rb') as file:
+#     with open(file, 'rb') as f:
+#         data = f.read()
+#     return base64.b64encode(data).decode()
+
+# model = pickle.load(open(WEIGHTS_DIR, filename), 'rb')
+
+# # Use the loaded model for prediction
+# # Configure the weights in .pt and .pkl format to be loaded into the model
+# # The weights are stored in the applicaiton/data/weights/best.pt location
+
+model = YOLOv5(os.path.join(WEIGHTS_DIR, 'best.pt'))
+# model = yolov5.load(os.path.join(WEIGHTS_DIR, 'best.pt'))
+# model = yolov5.load(os.path.join(WEIGHTS_DIR, 'best.pt'))
 
 # Create a title and sub-title
 st.write("""
@@ -24,11 +44,18 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg
 
 # Create a section that displays the image
 if uploaded_file is not None:
-    image = Image.open(uploaded_file)
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
+    imageOr = Image.open(uploaded_file)
+
+    # with open(imageOr, 'rb') as f:
+    #     data = f.read()
+    #     imageNew  = base64.b64encode(data).decode()
+    # print(type(image))
+    st.image(imageOr, caption='Uploaded Image.', use_column_width=True)
     st.write("")
     st.write("Classifying...")
-    label = model.predict(uploaded_file)
+
+    label = model.predict(imageOr)
+    # label = model.predict((str(imageNew)))
     st.write('%s (%.2f%%)' % (label[1], label[2]*100))
 
 # Create a section that displays the image labels and their corresponding confidence score

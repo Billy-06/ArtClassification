@@ -1,35 +1,6 @@
 import os
 from PIL import Image
 
-# def generate_yolo_label(image_path, category):
-#     image = Image.open(image_path)
-#     width, height = image.size
-
-#     label = f"{category} 0 0 {width} {height}"
-#     return label
-
-# def process_images(path, category, output_dir):
-#     image_files = os.listdir(path)
-
-#     for image_file in image_files:
-#         if image_file.endswith(".jpg") or image_file.endswith(".png"):
-#             image_path = os.path.join(path, image_file)
-#             label = generate_yolo_label(image_path, category)
-
-#             label_file = os.path.splitext(image_file)[0] + ".txt"
-#             output_path = os.path.join(output_dir, label_file)
-
-#             with open(output_path, "w") as file:
-#                 file.write(label)
-
-# # Set the input and output directories
-# path = "path/to/input/images"
-# category = "example_category"
-# output_dir = "path/to/output/directory"
-
-# # Process the images and generate YOLO labels
-# process_images(path, category, output_dir)
-
 def write_yolo_label(image_path, category, output_dir):
     image_name = str(os.path.splitext(os.path.basename(image_path))[0])
     label_name = image_name + ".txt"
